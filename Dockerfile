@@ -1,7 +1,7 @@
 FROM        perl:latest
-MAINTAINER  Mitchell Hewes <me@mitcdh.com>
+MAINTAINER  Rick Dulton <sam.olsen11@gmail.com>
 
-RUN cpanm POE::Component::IRC
+RUN cpanm --notest --configure-timeout=3600 POE::Component::IRC
 
 COPY files/* /usr/src/strikebot/
 
