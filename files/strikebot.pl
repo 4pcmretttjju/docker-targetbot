@@ -12,6 +12,7 @@ my $server = $ENV{'SERVER'}; ;
 my $nickservpw = $ENV{'NS_PASS'};
 my @ownerchannels = split(',', $ENV{'OWNER_CHANNELS'});
 my @channels = split(',', $ENV{'CHANNELS'});
+my $ownernick = 'Rick';                         # Ensures owner has full access
 
 #my @channels = ( '#bots' );
 
@@ -121,6 +122,11 @@ sub irc_001
 
 	# we join our channels
 	$irc->yield( join => $_ ) for @channels;
+
+	################################################################################
+    # Notify our owner that we are starting up.
+    ################################################################################
+    $irc->yield (notice => $ownernick => "\002BARHAH\002" );
 
 	return;
 }
