@@ -45,6 +45,6 @@ jobs:
             registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            environment-variables: NICK=TargetBot-ACI NS_PASS= SERVER=irc.nexuswar.com OWNER_CHANNELS=#targetbot-log CHANNELS=#targetbot-log
+            environment-variables: NICK=TargetBot-ACI NS_PASS= SERVER=irc.nexuswar.com OWNER_CHANNELS=#targetbot-aci CHANNELS=#rrf-ud,#constable
             name: aci-targetbot
             location: 'west us'
