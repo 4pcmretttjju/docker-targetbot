@@ -123,11 +123,11 @@ sub irc_001
 	# we join our channels
 	$irc->yield( join => $_ ) for @channels;
 
-    ################################################################################
-    # Notify our owner that we are starting up.
-    ################################################################################
-    $irc->yield (notice => $ownernick => "\002BARHAH\002" );
-		
+	################################################################################
+    	# Notify our owner that we are starting up.
+    	################################################################################
+    	$irc->yield (notice => $ownernick => "\002BARHAH\002 $ownernick" );
+
 	return;
 }
 
