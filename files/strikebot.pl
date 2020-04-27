@@ -12,6 +12,7 @@ my $server = $ENV{'SERVER'}; ;
 my $nickservpw = $ENV{'NS_PASS'};
 my @ownerchannels = split(',', $ENV{'OWNER_CHANNELS'});
 my @channels = split(',', $ENV{'CHANNELS'});
+my $ownernick = 'Rick';                         # Ensures owner has full access
 
 #my @channels = ( '#bots' );
 
@@ -122,6 +123,11 @@ sub irc_001
 	# we join our channels
 	$irc->yield( join => $_ ) for @channels;
 
+    ################################################################################
+    # Notify our owner that we are starting up.
+    ################################################################################
+    $irc->yield (notice => $ownernick => "\002BARHAH\002" );
+		
 	return;
 }
 
@@ -145,6 +151,8 @@ sub irc_public
 	my $admintest = ($irc->is_channel_admin( $channel, $nick ) || $irc->is_channel_owner( $channel, $nick )) ? 1 : 0;
 	my $optest = ($irc->is_channel_operator( $channel, $nick ) || $admintest) ? 1 : 0;
 	$what = strip_color(strip_formatting($what));
+
+	print "Received: $what in channel: $channel \n";
 	
 	if(grep { $_ eq $channel } @ownerchannels)
 	{
@@ -226,6 +234,15 @@ sub irc_public
 				$irc->yield (notice => $nick => "Strike Ping (!strike) Unrestricted For Channel '$channel'");
 			}
 		}
+		################################################################################
+        # For testing: !coffee
+        ################################################################################
+        elsif ($what =~ /^!coffee(.*)/i)
+        {
+                my $greeting = "Hello, $nick.  Have a nice cup of$1 coffee.. ";
+
+                $irc->yield (privmsg => $channel => $greeting);
+        }
 	}	
 }
 
