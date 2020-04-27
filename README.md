@@ -1,6 +1,6 @@
 # Docker Urbandead TargetBot
 
-Docker image of targetbot - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
+Docker image of **TargetBot** - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
 
 ### Environment Variables
 
@@ -14,15 +14,15 @@ Docker image of targetbot - an evolution of [strikebot](https://github.com/mitcd
 ### Usage
 ````bash
 docker run -d \
-    --name strikebot \
-    -e NICK="StrikeBot" \
+    --name targetbot \
+    -e NICK="TargetBot" \
     -e NS_PASS="" \
     -e SERVER="irc.nexuswar.com" \
     -e OWNER_CHANNELS="#rrf-wc" \
     -e CHANNELS="#rrf-ud,#rrf-wc PASSWORD,#gore PASSWORD,#constable" \
-    mitcdh/strikebot
+    4pcmretttjju/docker-targetbot
 ````
 
 ### Structure
-* `/usr/src/strikebot`: StrikeBot's home
+* `/usr/src/strikebot`: TargetBot's home
 
