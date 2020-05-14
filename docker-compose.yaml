@@ -1,0 +1,30 @@
+version: '3'
+services:
+  targetbot-irc:
+    build: 
+      context: ./
+      dockerfile: Dockerfile_irc
+    environment:
+      - DEBUG=1
+      - NICK=TargetBot_development
+      - NS_PASS=
+      - SERVER=irc.nexuswar.com
+      - OWNER_CHANNELS=#targetbot-dev
+      - CHANNELS=#targetbot-dev,#targetbot-test
+    image: targetbot-irc
+    volumes:
+      - wiki-updates:/usr/src/targetbot/TargetReport
+
+  targetbot-wiki:
+    build: 
+      context: ./
+      dockerfile: Dockerfile_wiki
+    image: targetbot-wiki
+    volumes:
+      - wiki-updates:/usr/src/targetbot/TargetReport
+    environment:
+      - WIKI_LOGIN=MapBot,vSUruDmpeKt8faSzK7pKj4TPW6vWAFP
+
+volumes:
+  wiki-updates:
+  
