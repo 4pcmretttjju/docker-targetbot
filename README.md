@@ -1,8 +1,10 @@
 # Docker Urbandead TargetBot
 
-Docker image of **TargetBot** - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
+Kubernetes version of **TargetBot** - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
 
-### Environment Variables
+### Environment Variables 
+
+From targetbot-manifest.yaml
 
 * `NICK`: Username/IRC Name/Nick 
 * `NS_PASS`: Nickserv password
@@ -13,16 +15,9 @@ Docker image of **TargetBot** - an evolution of [strikebot](https://github.com/m
 
 ### Usage
 ````bash
-docker run -d \
-    --name targetbot \
-    -e NICK="TargetBot" \
-    -e NS_PASS="" \
-    -e SERVER="irc.nexuswar.com" \
-    -e OWNER_CHANNELS="#rrf-wc" \
-    -e CHANNELS="#rrf-ud,#rrf-wc PASSWORD,#gore PASSWORD,#constable" \
-    4pcmretttjju/docker-targetbot
+kubectl apply -f targetbot-manifest.yaml    
 ````
 
-### Structure
-* `/usr/src/strikebot`: TargetBot's home
-
+### Containers
+* `targetbot-irc`: joins IRC channels and parses dumbwit URLs for map updates
+* `targetbot-wiki`: updates wiki pages with map updates, e.g. [User:TargetReport/Ridleybank](http://wiki.urbandead.com/index.php/User:TargetReport/Ridleybank).
