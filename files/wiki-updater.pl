@@ -6,12 +6,15 @@ use warnings;
 use HTML::TreeBuilder -weak; # Ensure weak references in use (no need to call $tree = $tree->delete; when done)
 use MediaWiki::API;
 
+STDOUT->autoflush(1);
+
 ################################################################################
 # Input paratemers are hard coded or read from VM environment values
 ################################################################################
 my $wikiuser = 'TargetReport';			# Wiki pages to update, e.g. 
 										# http://wiki.urbandead.com/index.php/User:TargetReport/Ridleybank
 my $wiki_dir = "$wikiuser";
+my $debug = $ENV{'DEBUG'};				# set to 0 or 1; controls verbose logging
 
 ################################################################################
 # Parse wiki username and password from VM environment values, e.g.
@@ -36,13 +39,19 @@ while (sleep(1))
 	################################################################################
 	# Read the directory, and loop through the filename list (if any).
 	################################################################################
+	my $server_time = time();
+	
+	debug_log("Reading directory at $server_time\n");
 	opendir (DIR, $wiki_dir) or die $!;
+	
+	my @filelist = grep !/^\.\.?$/, readdir(DIR);	# Get files EXCLUDING . and ..
 
-	while (my $filename = readdir(DIR)) {
+	foreach my $filename (@filelist) {
 
 		################################################################################
 		# Open the current file and read contents into an array.  Ignore empty files.
 		################################################################################
+		debug_log("Opening $wiki_dir/$filename");
 		open( my $input_fh, "<", "$wiki_dir/$filename" ) || next;	# Ignore empty files.
 		my @file_data = <$input_fh>;	# Create an array - one entry per line
 		close ($input_fh); 			# Close the file 
@@ -58,13 +67,15 @@ while (sleep(1))
 		# - The rest of the file contains the page contents.
 		################################################################################
 		my $summary = shift(@file_data);
+		debug_log("Summary: $summary");
+		
 		my $newpage = '';
-
 		for (@file_data) {
 			$newpage .= $_;
 		}
 		chomp ($newpage);		# Wiki always ignores any trailing newlines.
-
+		debug_log("$newpage");
+		
 		################################################################################
 		# Read the wiki page we're interested in changing.
 		################################################################################
@@ -76,18 +87,21 @@ while (sleep(1))
 		################################################################################
 		# Skip to the next file if the contents haven't changed.
 		################################################################################
-		if ($newpage eq $page->{'*'}) {next}
+		my $wiki_page = $page->{'*'};
+		debug_log("Existing $pagename contents:\n$wiki_page");
+		if ($newpage eq $wiki_page) {next}
 	
 		################################################################################
 		# Now update the wiki page with the new text.
 		################################################################################
-		print "Updating wiki page: $pagename \n";
+		print("Updating wiki $pagename ($summary)\n");
 
 		update_wiki_page($pagename, $page->{timestamp}, $newpage, $summary) || next;
 
 		################################################################################
 		# If we got this far, pause for a second before updating another page.
 		################################################################################
+		debug_log("Successfully updated $pagename\nSleeping...");
 		sleep(1);
 	}
 
@@ -171,5 +185,5 @@ sub wiki_error
 sub debug_log
 {
 	my $log_text = $_[0];
-	print "$log_text \n";
+	print "$log_text\n" if $debug;
 }

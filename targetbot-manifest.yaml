@@ -6,32 +6,22 @@ metadata:
     app: bot
 spec:
   containers:
-  - name: targetbot-irc
-    image: targetbotregistry.azurecr.io/targetbot-irc:v2
-    env:
-    - name: DEBUG
-      value: "0"
-    - name: NICK
-      value: "TargetBot-AKS"
-    - name: NS_PASS
-      value: ""
-    - name: SERVER
-      value: "irc.nexuswar.com"
-    - name: OWNER_CHANNELS
-      value: "#targetbot-dev"
-    - name: CHANNELS
-      value: "#targetbot-dev,#targetbot-test"
-    volumeMounts:
-    - mountPath: /usr/src/targetbot/TargetReport
-      name: wiki-updates
-  - name: targetbot-wiki
-    image: targetbotregistry.azurecr.io/targetbot-wiki:v2
-    env:
-    - name: WIKI_LOGIN
-      value: "MapBot,vSUruDmpeKt8faSzK7pKj4TPW6vWAFP"
-    volumeMounts:
-    - mountPath: /usr/src/targetbot/TargetReport
-      name: wiki-updates
+    - name: targetbot-irc
+      image: 'targetbotregistry.azurecr.io/targetbot-irc:latest'
+      envFrom:
+        - configMapRef:
+            name: irc-channels
+      volumeMounts:
+        - mountPath: /usr/src/targetbot/TargetReport
+          name: wiki-updates
+    - name: targetbot-wiki
+      image: 'targetbotregistry.azurecr.io/targetbot-wiki:latest'
+      envFrom:
+        - secretRef:
+            name: wiki-login
+      volumeMounts:
+        - mountPath: /usr/src/targetbot/TargetReport
+          name: wiki-updates
   volumes:
-  - name: wiki-updates
-    emptyDir: {}
+    - name: wiki-updates
+      emptyDir: {}

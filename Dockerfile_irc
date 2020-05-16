@@ -6,6 +6,9 @@ RUN cpanm --notest --configure-timeout=3600 POE::Component::IRC HTML::TreeBuilde
 COPY files/targetbot.pl /usr/src/targetbot/
 COPY files/mapdata.dat /usr/src/targetbot/
 
+RUN mkdir /usr/src/targetbot/TargetReport
+RUN chown nobody:nogroup /usr/src/targetbot/TargetReport
+
 WORKDIR /usr/src/targetbot
 
 USER nobody
