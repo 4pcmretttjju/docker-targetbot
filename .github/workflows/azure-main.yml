@@ -1,7 +1,7 @@
 name: Deploy_Azure_Container_Instance
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+# events but only for the aci branch
 on:
   push:
     branches: [ aci ]
@@ -19,7 +19,7 @@ jobs:
         steps:
         # checkout the repo
         - name: 'Checkout GitHub Action'
-          uses: actions/checkout@master
+          uses: actions/checkout@aci
           
         - name: 'Login via Azure CLI'
           uses: azure/login@v1
