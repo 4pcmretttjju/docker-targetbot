@@ -1,12 +1,12 @@
-name: Deploy_master_to_Azure
+name: Deploy_Azure_Container_Instance
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ aci ]
   pull_request:
-    branches: [ master ]
+    branches: [ aci ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -45,6 +45,6 @@ jobs:
             registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            environment-variables: NICK=TargetBot-ACI NS_PASS= SERVER=irc.nexuswar.com OWNER_CHANNELS=#targetbot-aci CHANNELS=#rrf-ud,#constable,#targetbot-aci
-            name: aci-targetbot
+            environment-variables: NICK=TargetBot-ACI NS_PASS= SERVER=irc.nexuswar.com OWNER_CHANNELS=#targetbot-aci-owner CHANNELS=#targetbot-aci,#targetbot-aci-owner
+            name: targetbot-aci
             location: 'west us'
