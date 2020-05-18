@@ -1,4 +1,4 @@
-name: Deploy_Azure_Container_Instance
+name: Deploy_Targetbot_utils_ACI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the aci branch
@@ -45,6 +45,6 @@ jobs:
             registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            environment-variables: NICK=TargetBot-ACI NS_PASS= SERVER=irc.nexuswar.com OWNER_CHANNELS=#targetbot-aci-owner CHANNELS=#targetbot-aci,#targetbot-aci-owner
-            name: targetbot-aci
+            environment-variables: NICK=TargetBot-utils NS_PASS= SERVER=irc.nexuswar.com CHANNELS=#targetbot-utils
+            name: targetbot-utils
             location: 'west us'
