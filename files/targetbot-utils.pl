@@ -28,12 +28,6 @@ my $stale_interval = 86400;				# 24h = 86400 seconds
 ################################################################################
 # Some common regular expressions and templates
 ################################################################################
-my $wit_re =		    qr/(https?:\/\/iamscott\.net\/\d+\.html|
-				    https?:\/\/udwitness\.oddnetwork\.org\/.*html)/i;
-#my $datetime_re =	      qr/(
-#       (\w\w\w \w\w\w \d\d? \d\d:\d\d:\d\d -?\d\d\d\d \d\d\d\d)|
-#       (\d\d\d\d\-\d\d\-\d\d \d\d:\d\d:\d\d)
-#			       )/;
 my $xy_re =		     qr/(\d\d?)[,\-] ?(\d\d?)/;
 my $outside_re =		qr/(Street|Park|Carpark|Cemetery|Wasteland|Monument)/i;
 my $junkyard_re =	       qr/(Junkyard|Zoo)/i;
@@ -44,22 +38,9 @@ my $debug = $ENV{'DEBUG'};				# set to 0 or 1; controls verbose logging
 ################################################################################
 # Other global variables used by the bot.
 ################################################################################
-my @target_channels;
-my %targets;
-my %greedy_disabled;
 my %status;		     # Raw data for each x,y
-my %target_status;	      # Cache of target status (description)
 my %timestamp;
-my %open_threads;
-my %open_thread_names;
-my %forum_posts;
-my %op_required;		# Whether targets can only be set by IRC channel ops.
-my %channel_prefs;
-my @raw_config;
 my $child;
-my @stale_q;		    # Array of arrays in [timestamp, x, y] format;
-my @reset_q;		    # Array of arrays in [timestamp, x, y] format;
-my $next_stale_check = 0;       # Throttling timer for peforming next stale / reset update.
 
 ################################################################################
 # Read in list of suburb and block names from file, and store in a hash.
@@ -200,7 +181,6 @@ sub irc_public
 	my $channel = lc $where->[0];
 	my $ownertest = $nick eq $ownernick;
 	my $admintest = ($irc->is_channel_admin( $channel, $nick ) || $irc->is_channel_owner( $channel, $nick ) || $ownertest) ? 1 : 0;
-	my $optest = ($irc->is_channel_operator( $channel, $nick ) || $admintest || $channel_prefs{$channel}{"auto_op"});
 	$what = strip_color(strip_formatting($what));
 
 	print "Received: $what in channel: $channel \n";
