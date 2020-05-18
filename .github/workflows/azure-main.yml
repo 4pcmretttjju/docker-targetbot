@@ -46,5 +46,5 @@ jobs:
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             environment-variables: NICK=TargetBot-utils NS_PASS= SERVER=irc.nexuswar.com CHANNELS=#targetbot-utils
-            name: targetbot-utils-{{ github.sha }}-{{ github.run_number }}
+            name: targetbot-utils
             location: 'west us'
