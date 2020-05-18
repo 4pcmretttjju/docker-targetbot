@@ -6,10 +6,7 @@ use Storable;
 
 use POE qw(Component::IRC::State Component::IRC::Plugin::Connector Component::IRC::Plugin::AutoJoin Component::IRC::Plugin::BotAddressed Component::IRC::Plugin::BotTraffic Component::IRC::Plugin::CTCP Component::IRC::Plugin::NickReclaim Component::IRC::Plugin::NickServID Component::IRC::Plugin::BotCommand);
 use POE::Component::IRC::Common qw( :ALL );
-use HTML::TreeBuilder -weak; # Ensure weak references in use (no need to call $tree = $tree->delete; when done)
 use MediaWiki::API;
-use Time::Seconds;
-use Date::Parse;						# used for str2time
 use List::Util 'max';
 
 STDOUT->autoflush(1);
