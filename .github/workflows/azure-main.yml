@@ -4,9 +4,9 @@ name: Deploy_Targetbot_utils_ACI
 # events but only for the aci branch
 on:
   push:
-    branches: [ aci ]
+    branches: [ utils ]
   pull_request:
-    branches: [ aci ]
+    branches: [ utils ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -46,5 +46,5 @@ jobs:
             registry-username: ${{ secrets.REGISTRY_USERNAME }}
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             environment-variables: NICK=TargetBot-utils NS_PASS= SERVER=irc.nexuswar.com CHANNELS=#targetbot-utils
-            name: targetbot-utils
+            name: targetbot-utils-{{ github.sha }}-{{ github.run_number }}
             location: 'west us'
