@@ -1,6 +1,6 @@
 # Docker Urbandead TargetBot
 
-Docker image of **TargetBot** - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
+Docker image containing utils for **TargetBot** - an evolution of [strikebot](https://github.com/mitcdh/docker-strikebot), the one true papa of the [Ridleybank Resistance Front](http://wiki.urbandead.com/index.php/The_Ridleybank_Resistance_Front) and also a generic IRC bot for coordinating zombie strikes on [urbandead.com](urbandead.com)
 
 ### Environment Variables
 
@@ -24,5 +24,5 @@ docker run -d \
 ````
 
 ### Structure
-* `/usr/src/strikebot`: TargetBot's home
+* `/usr/src/targetbot`: TargetBot's home
 

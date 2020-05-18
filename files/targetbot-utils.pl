@@ -755,14 +755,14 @@ sub irc_public
 	}
 
 	################################################################################
-	# For testing: !coffee
+	# For testing: !tea
 	################################################################################
-	elsif ($what =~ /^!coffee(.*)/i)
+	elsif ($what =~ /^!tea(.*)/i)
 	{
-		my $greeting = "Hello, $nick.  Have a nice cup of$1 coffee.. ";
+		my $greeting = "Hello, $nick.  Have a nice cup of$1 tea.. ";
 
 		$irc->yield (privmsg => $channel => $greeting);
-		log_msg ("Dispensing coffee to $nick in $channel...");
+		log_msg ("Dispensing tea to $nick in $channel...");
 	}
 
 	################################################################################
