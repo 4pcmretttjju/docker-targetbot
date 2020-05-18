@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: targetbot
+  labels:
+    app: bot
+spec:
+  containers:
+    - name: targetbot-irc
+      image: 'targetbotregistry.azurecr.io/targetbot-irc:latest'
+      envFrom:
+        - configMapRef:
+            name: irc-channels
+      volumeMounts:
+        - mountPath: /usr/src/targetbot/TargetReport
+          name: wiki-updates
+    - name: targetbot-wiki
+      image: 'targetbotregistry.azurecr.io/targetbot-wiki:latest'
+      envFrom:
+        - secretRef:
+            name: wiki-login
+      volumeMounts:
+        - mountPath: /usr/src/targetbot/TargetReport
+          name: wiki-updates
+  volumes:
+    - name: wiki-updates
+      emptyDir: {}

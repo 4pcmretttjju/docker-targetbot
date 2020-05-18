@@ -1,0 +1,14 @@
+FROM        perl:5.30
+MAINTAINER  Rick Dulton <sam.olsen11@gmail.com>
+
+RUN cpanm --notest --configure-timeout=3600 HTML::TreeBuilder MediaWiki::API
+
+COPY files/wiki-updater.pl /usr/src/targetbot/
+
+RUN mkdir /usr/src/targetbot/TargetReport
+RUN chown nobody:nogroup /usr/src/targetbot/TargetReport
+
+WORKDIR /usr/src/targetbot
+
+USER nobody
+CMD [ "perl", "./wiki-updater.pl" ]

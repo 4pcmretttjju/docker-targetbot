@@ -1,0 +1,29 @@
+version: '3'
+services:
+  targetbot-irc:
+    build: 
+      context: ./
+      dockerfile: Dockerfile_irc
+    env_file:
+      - irc_channels_test.env
+    environment:
+      - DEBUG=0
+    image: targetbot-irc
+    volumes:
+      - wiki-updates:/usr/src/targetbot/TargetReport
+
+  targetbot-wiki:
+    build: 
+      context: ./
+      dockerfile: Dockerfile_wiki
+    image: targetbot-wiki
+    volumes:
+      - wiki-updates:/usr/src/targetbot/TargetReport
+    env_file:
+      - wiki_login.env
+    environment:
+      - DEBUG=1
+
+volumes:
+  wiki-updates:
+  
