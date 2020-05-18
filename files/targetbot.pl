@@ -12,6 +12,8 @@ use Time::Seconds;
 use Date::Parse;						# used for str2time
 use List::Util 'max';
 
+STDOUT->autoflush(1);
+
 # Used by the bot
 my ($nickname, $username, $ircname) = $ENV{'NICK'};
 my $server = $ENV{'SERVER'}; ;
@@ -38,8 +40,7 @@ my $outside_re =		qr/(Street|Park|Carpark|Cemetery|Wasteland|Monument)/i;
 my $junkyard_re =	       qr/(Junkyard|Zoo)/i;
 my $wit_server_offset = 0;      # E.g. 3600 if wit server clock 1 hour behind
 
-# my $debug = '';						# set to 'true' to enable debug
-my $debug = 'true';						# set to 'true' to enable debug
+my $debug = $ENV{'DEBUG'};				# set to 0 or 1; controls verbose logging
 
 ################################################################################
 # The following settings can be overwritten by a configuration file.
@@ -213,9 +214,6 @@ sub irc_public
 
 	print "Received: $what in channel: $channel \n";
 	
-	# say ("whaaat: $what");
-	# return;
-
 	################################################################################
 	# Parse the nick list to check if StrikeBot is present in this channel.
 	#
@@ -2186,7 +2184,8 @@ sub update_block_style
 			$striketarget = "";
 		}
 	}
-
+	
+=begin comment
 	################################################################################
 	# Ignore survivor data that is more than a week old.
 	################################################################################
@@ -2232,6 +2231,8 @@ sub update_block_style
 	{
 		$status = "" unless ($status_timestamp and $status_timestamp > $_1m);
 	}
+=end comment
+=cut
 
 	################################################################################
 	# Figure out the most recent timestamp.
@@ -2479,7 +2480,7 @@ sub td_block_style
 	else
 	{
 		################################################################################
-		# If this location has *never* been updated, black out with opactity 20%.
+		# If this location has *never* been updated, black out with opacity 20%.
 		################################################################################
 		if (defined($status) and !($status))
 		{
